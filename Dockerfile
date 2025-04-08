@@ -1,4 +1,4 @@
-FROM balenalib/generic-aarch64-debian:buster
+FROM debian:buster
 
 WORKDIR /usr/src/app/
 
