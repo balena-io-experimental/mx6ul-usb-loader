@@ -1,19 +1,15 @@
-FROM debian:buster
+FROM debian:bullseye
 
 WORKDIR /usr/src/app/
 
-RUN apt-get update && apt-get install -y libusb-1.0-0-dev git build-essential usbrelay usbutils ssh tar pkg-config && \
- git clone https://github.com/boundarydevices/imx_usb_loader.git && \
- cd imx_usb_loader && \
- git checkout c598fd1
+RUN apt-get update && apt-get install -y usbrelay ssh git pkg-config libusb-1.0-0-dev \
+    libbz2-dev libzstd-dev pkg-config cmake libssl-dev g++ zlib1g-dev libtinyxml2-dev && \
+    git clone https://github.com/nxp-imx/mfgtools.git && \
+    cd mfgtools && cmake . && make
 
-COPY ./assets.tar.gz /usr/src/app/
+COPY ./imx-boot-sd /usr/src/app/
 COPY ./script.sh /usr/src/app/
 
-RUN cd /usr/src/app/imx_usb_loader && \
- tar xf /usr/src/app/assets.tar.gz && \
- cp -r assets/* . && \
- make 
 
 ENV UDEV=1
 

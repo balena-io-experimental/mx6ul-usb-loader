@@ -20,7 +20,8 @@
 #        }
 
 
-pushd /usr/src/app/imx_usb_loader/
-./imx_usb &  export _PID=$! ; sleep 5; kill ${_PID} && ./imx_usb
-
+pushd /usr/src/app/
+mfgtools/uuu/uuu imx-boot-sd
+sleep 5
+mfgtools/uuu/uuu imx-boot-sd
 exit $?
